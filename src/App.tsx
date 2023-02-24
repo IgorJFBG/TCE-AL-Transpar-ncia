@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 
-import { Col, Row, Button, DatePicker, Divider, Input, Typography, Table, Modal } from 'antd';
-import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-import moment from 'moment';
-import dataRAW from './data.json';
+import { Row } from 'antd';
 
 import { rowPadding } from './components/defaults';
 
