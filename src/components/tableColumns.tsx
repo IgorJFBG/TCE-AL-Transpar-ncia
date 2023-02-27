@@ -4,30 +4,12 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined } from '@ant-design/icons';
 import { removeAcento } from "./defaults";
 import moment from 'moment';
+import type { DataType, AditivoDataType } from "./defaults";
 
 import dataRAW from '../data.json';
 import { More } from './modal';
 
 export { data, columns };
-export type { DataType };
-
-interface DataType{
-    contrato: string,
-    aditivo: string,
-    contratado: string,
-    objeto: string,
-    valor: string,
-    data_da_assinatura: string,
-    data_da_publicacao: string,
-    inicio_da_vigencia: string,
-    fim_da_vigencia: string,
-    fiscal: string,
-    gestor: string,
-    estagio: string,
-    documento: string,
-    processo: string,
-    modalidade: string | null,
-}
 
 const data = () => {
     let dataText = [] as DataType[];
@@ -41,7 +23,7 @@ const data = () => {
                 if (dataJSON[i].contrato === dataText[j].contrato){
                     let aditivo;
                     if (dataText[j].aditivo == null){
-                        aditivo = [] as DataType[];
+                        aditivo = [] as AditivoDataType[];
                     }
                     else{
                         aditivo = JSON.parse(dataText[j].aditivo as string);
@@ -53,7 +35,6 @@ const data = () => {
             }
         }
     }
-    console.log (JSON.stringify(dataText));
     return dataText as DataType[];
 };
 
@@ -101,9 +82,15 @@ const columns: ColumnsType<DataType> = [
         dataIndex: 'aditivo',
         key: 'aditivo',
         render: (value: string) => {
+            let contratos = JSON.parse(value);
+            let aditivos = JSON.parse(value) as AditivoDataType[];
             return (
                 <>
-                    <More value={value}/>
+                    <More
+                        aditivos={aditivos}
+                        contrato={contratos[0].contrato}
+                        contratado={contratos[0].contratado}
+                        objeto={contratos[0].objeto}/>
                 </>
             )
         }

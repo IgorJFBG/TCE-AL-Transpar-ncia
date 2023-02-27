@@ -1,5 +1,4 @@
-import React from 'react';
-import { Col, Row, Button } from 'antd';
+import { Col, Button } from 'antd';
 import { colPadding } from './defaults';
 
 export { TopButtons };

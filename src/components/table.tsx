@@ -3,7 +3,7 @@ import { colPadding } from './defaults';
 import { DownloadOutlined } from '@ant-design/icons';
 
 import { data, columns } from './tableColumns';
-import type { DataType } from './tableColumns';
+import type { DataType } from './defaults';
 
 export { OurTable };
 
