@@ -13,17 +13,17 @@ function TopButtons() {
             </Col>
             <Col span={6} style={colPadding}>
                 <Button block>
-                    Remuneração dos Servidores
+                    Lotação
                 </Button>
             </Col>
             <Col span={6} style={colPadding}>
                 <Button block>
-                    Remuneração dos Servidores
+                    Tabela com Padrão Remuneratório
                 </Button>
             </Col>
             <Col span={6} style={colPadding}>
                 <Button block>
-                    Remuneração dos Servidores
+                    Legislação
                 </Button>
             </Col>
         </>

@@ -1,6 +1,5 @@
 export {rowPadding, colPadding, removeAcento};
-export type { DataType, AditivoDataType }
-
+export type { DataType, AditivoDataType };
 const rowPadding = {
     paddingBlock: 16,
     paddingInline: 8,
@@ -50,5 +49,5 @@ interface AditivoDataType{
     estagio: string,
     documento: string,
     processo: string,
-    modalidade: string | null,
+    modalidade: string | null
 }
