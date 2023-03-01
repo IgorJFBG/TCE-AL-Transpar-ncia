@@ -15,11 +15,13 @@ const columns: ColumnsType<AditivoDataType> = [
         title: 'Aditivo',
         dataIndex: 'aditivo',
         key: 'aditivo',
+        fixed: 'left',
     },
     {
         title: 'Valor',
         dataIndex: 'valor',
         key: 'valor',
+        sorter: (a: any, b: any) => a.valor - b.valor,
         render: (value) => {
             let valueSplitted;
             if (String(value).includes('.')){
@@ -46,24 +48,28 @@ const columns: ColumnsType<AditivoDataType> = [
         title: 'Data da Assinatura',
         dataIndex: 'data_da_assinatura',
         key: 'data_da_assinatura',
+        sorter: (a, b) => moment(a.data_da_assinatura).unix() - moment(b.data_da_assinatura).unix(),
         render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Data da Publicação',
         dataIndex: 'data_da_publicacao',
         key: 'data_da_publicacao',
+        sorter: (a,b) => moment(a.data_da_publicacao).unix() - moment(b.data_da_publicacao).unix(),
         render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Início da Vigência',
         dataIndex: 'inicio_da_vigencia',
         key: 'inicio_da_vigencia',
+        sorter: (a,b) => moment(a.inicio_da_vigencia).unix() - moment(b.inicio_da_vigencia).unix(),
         render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Fim da Vigência',
         dataIndex: 'fim_da_vigencia',
         key: 'fim_da_vigencia',
+        sorter: (a,b) => moment(a.fim_da_vigencia).unix() - moment(b.fim_da_vigencia).unix(),
         render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
@@ -185,7 +191,7 @@ function More(props: {
                 centered
                 open={isModalOpen}
                 onOk={handleOk}
-                width={1350}
+                width={1400}
                 footer={[
                     <Button key="back" onClick={handleOk}>
                         Fechar
@@ -199,7 +205,14 @@ function More(props: {
                         Contratado: {props.contratado}
                     </Text>
                 </Space>
-                <Table columns={columns} dataSource={props.aditivos} style={{ paddingBlockStart: 8 }}/>
+                <Table
+                    columns={columns}
+                    dataSource={props.aditivos}
+                    style={{ paddingBlockStart: 8 }}
+                    size="small"
+                    pagination={{ pageSize: 50}}
+                    scroll={{ y: 300, x: 1300 }}
+                    />
             </Modal>
         </>
     )

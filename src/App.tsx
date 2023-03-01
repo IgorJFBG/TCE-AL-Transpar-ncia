@@ -15,9 +15,6 @@ const App: React.FC = () => {
         <Row style={rowPadding}>
             <TopButtons />
         </Row>
-        <div style={{backgroundColor: 'lightblue'}}>
-            <TableSearch />
-        </div>
         <OurTable />
     </>
     )

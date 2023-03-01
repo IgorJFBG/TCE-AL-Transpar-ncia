@@ -4,12 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ConfigProvider } from 'antd';
+import moment from 'moment';
+import pt_BR from 'antd/lib/locale/pt_BR';
+
+moment.locale("pt");
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={pt_BR}>
+      <App />
+    </ConfigProvider>
   </React.StrictMode>
 );
 

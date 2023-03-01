@@ -1,7 +1,7 @@
-import React from 'react';
 import { Row, Col, Divider, Input, DatePicker, Button, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { colPadding } from './defaults';
+import { columns } from './tableColumns';
 
 export { TableSearch };
 
@@ -32,7 +32,7 @@ function TableSearch() {
                 paddingInline: 8
                 }}>
                 <Col span={6} style={colPadding}>
-                    <Input placeholder="Pesquisar na tabela" />
+                    <Input placeholder="Pesquisar na tabela"/>
                 </Col>
                 <Col span={6} style={colPadding}>
                     <DatePicker placeholder="Selecionar data" style={{width: '100%'}}/>

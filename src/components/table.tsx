@@ -1,7 +1,8 @@
 import { Button, Table } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import { Excel } from 'antd-table-saveas-excel';
 import moment from 'moment';
+
+import { Excel } from 'antd-table-saveas-excel';
 
 import { data, columns } from './tableColumns';
 import dataRAW from '../data.json';
@@ -58,26 +59,78 @@ const DownloadExcel = () => {
         .saveAs("Transparência.xlsx");
 };
 
+function ConvertJSONtoXML(obj: any) {
+    let xml = '';
+    for (let prop in obj) {
+      xml += obj[prop] instanceof Array ? '' : '<' + prop + '>';
+      if (obj[prop] instanceof Array) {
+        for (let array in obj[prop]) {
+          xml += '\n<' + prop + '>\n';
+          xml += ConvertJSONtoXML(new Object(obj[prop][array]));
+          xml += '</' + prop + '>';
+        }
+      } else if (typeof obj[prop] == 'object') {
+        xml += ConvertJSONtoXML(new Object(obj[prop]));
+      } else {
+        xml += obj[prop];
+      }
+      xml += obj[prop] instanceof Array ? '' : '</' + prop + '>\n';
+    }
+    xml = xml.replace(/<\/?[0-9]{1,}>/g, '');
+    return xml;
+  }
+
+const DownloadXML = () => {
+    const xml = ConvertJSONtoXML(dataRAW);
+    console.log (xml);
+    
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml));
+    element.setAttribute('download', 'Transparência.xml');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    
+    element.click();
+
+    document.body.removeChild(element);
+};
+
+const DownloadJSON = () => {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(dataRAW)));
+    element.setAttribute('download', 'Transparência.json');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    
+    element.click();
+
+    document.body.removeChild(element);
+}
+
 function OurTable() {
     return (
         <>
             <div style={{
-                paddingBlock: 16,
+                paddingBlockEnd: 16,
                 paddingInline: 8,
             }}>
                 <Button type="primary" icon={<DownloadOutlined />} style={{marginInline: 8,}} onClick={DownloadExcel}>
                     Excel (xlsx)
                 </Button>
-                <Button type="primary" icon={<DownloadOutlined />} style={{marginInline: 8,}}>
+                <Button type="primary" icon={<DownloadOutlined />} style={{marginInline: 8,}} onClick={DownloadXML}>
                     Extensiva (xml)
                 </Button>
-                <Button type="primary" icon={<DownloadOutlined />} style={{marginInline: 8,}}>
+                <Button type="primary" icon={<DownloadOutlined />} style={{marginInline: 8,}} onClick={DownloadJSON}>
                     Objeto Web (json)
                 </Button>
             </div>
             <Table
                 columns={columns}
                 dataSource={data()}
+                size='middle'
+                scroll={{ x: 1600, }}
             />
         </>
     )
