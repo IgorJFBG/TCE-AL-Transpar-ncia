@@ -7,8 +7,6 @@ import { Excel } from 'antd-table-saveas-excel';
 import { data, columns } from './tableColumns';
 import dataRAW from '../data.json';
 
-export { OurTable };
-
 const excelColumns = [
     { title: 'Contrato', dataIndex: 'contrato', key: 'contrato', },
     { title: 'Aditivo', dataIndex: 'aditivo', key: 'aditivo', },
@@ -19,7 +17,7 @@ const excelColumns = [
         let valueSplitted;
         if (String(value).includes('.')){
             valueSplitted = String(value).split('.');
-            if (valueSplitted[1].length == 1)
+            if (valueSplitted[1].length === 1)
                 valueSplitted[1] += '0';
         }
         else{
@@ -30,7 +28,7 @@ const excelColumns = [
         let a = valueSplitted[0];
         for (let i = 1; i <= a.length; i++){
             integerValue = a[a.length-i] + integerValue;
-            if (i % 3 == 0 && i != a.length){
+            if (i % 3 === 0 && i !== a.length){
                 integerValue = '.' + integerValue;
             }
         }
@@ -66,11 +64,11 @@ function ConvertJSONtoXML(obj: any) {
       if (obj[prop] instanceof Array) {
         for (let array in obj[prop]) {
           xml += '\n<' + prop + '>\n';
-          xml += ConvertJSONtoXML(new Object(obj[prop][array]));
+          xml += ConvertJSONtoXML(Object(obj[prop][array]));
           xml += '</' + prop + '>';
         }
       } else if (typeof obj[prop] == 'object') {
-        xml += ConvertJSONtoXML(new Object(obj[prop]));
+        xml += ConvertJSONtoXML(Object(obj[prop]));
       } else {
         xml += obj[prop];
       }
@@ -130,8 +128,11 @@ function OurTable() {
                 columns={columns}
                 dataSource={data()}
                 size='middle'
-                scroll={{ x: 1600, }}
+                scroll={{ x: 1800, }}
+                rowKey="id"
             />
         </>
     )
 };
+
+export { OurTable };

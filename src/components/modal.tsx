@@ -8,8 +8,6 @@ import type { AditivoDataType } from './defaults';
 
 const { Text } = Typography;
 
-export { More };
-
 const columns: ColumnsType<AditivoDataType> = [
     { // aditivo
         title: 'Aditivo',
@@ -26,7 +24,7 @@ const columns: ColumnsType<AditivoDataType> = [
             let valueSplitted;
             if (String(value).includes('.')){
                 valueSplitted = String(value).split('.');
-                if (valueSplitted[1].length == 1)
+                if (valueSplitted[1].length === 1)
                     valueSplitted[1] += '0';
             }
             else{
@@ -37,7 +35,7 @@ const columns: ColumnsType<AditivoDataType> = [
             let a = valueSplitted[0];
             for (let i = 1; i <= a.length; i++){
                 integerValue = a[a.length-i] + integerValue;
-                if (i % 3 == 0 && i != a.length){
+                if (i % 3 === 0 && i !== a.length){
                     integerValue = '.' + integerValue;
                 }
             }
@@ -49,28 +47,28 @@ const columns: ColumnsType<AditivoDataType> = [
         dataIndex: 'data_da_assinatura',
         key: 'data_da_assinatura',
         sorter: (a, b) => moment(a.data_da_assinatura).unix() - moment(b.data_da_assinatura).unix(),
-        render: (date: string) => moment(date).format('DD/MM/YYYY'),
+        render: (date: string) => moment(date).format('YYYY-MM-DD'),
     },
     {
         title: 'Data da Publicação',
         dataIndex: 'data_da_publicacao',
         key: 'data_da_publicacao',
         sorter: (a,b) => moment(a.data_da_publicacao).unix() - moment(b.data_da_publicacao).unix(),
-        render: (date: string) => moment(date).format('DD/MM/YYYY'),
+        render: (date: string) => moment(date).format('YYYY-MM-DD'),
     },
     {
         title: 'Início da Vigência',
         dataIndex: 'inicio_da_vigencia',
         key: 'inicio_da_vigencia',
         sorter: (a,b) => moment(a.inicio_da_vigencia).unix() - moment(b.inicio_da_vigencia).unix(),
-        render: (date: string) => moment(date).format('DD/MM/YYYY'),
+        render: (date: string) => moment(date).format('YYYY-MM-DD'),
     },
     {
         title: 'Fim da Vigência',
         dataIndex: 'fim_da_vigencia',
         key: 'fim_da_vigencia',
         sorter: (a,b) => moment(a.fim_da_vigencia).unix() - moment(b.fim_da_vigencia).unix(),
-        render: (date: string) => moment(date).format('DD/MM/YYYY'),
+        render: (date: string) => moment(date).format('YYYY-MM-DD'),
     },
     {
         title: 'Fiscal',
@@ -217,3 +215,5 @@ function More(props: {
         </>
     )
 }
+
+export { More };
