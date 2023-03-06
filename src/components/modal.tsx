@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Button, Modal, Typography, Space, Input, Table } from 'antd';
+import { Button, Modal, Typography, Space, Table } from 'antd';
 import moment from 'moment';
 import { removeAcento } from './defaults';
 import { SearchOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+
 import type { AditivoDataType } from './defaults';
+import { DateFilterDropdown, TextFilterDropdown } from './hooks';
 
 const { Text } = Typography;
 
@@ -46,65 +48,59 @@ const columns: ColumnsType<AditivoDataType> = [
         title: 'Data da Assinatura',
         dataIndex: 'data_da_assinatura',
         key: 'data_da_assinatura',
+        filterDropdown: DateFilterDropdown,
+        onFilter: (value, record: AditivoDataType) => {
+            const [start, end] = (value as String).split(',');
+            console.log(`Moment: (${moment(record.data_da_assinatura)}) \n\n - Value: ${value} \n - Start: ${start} / ${moment(start, 'DD/MM/YYYY')} \n - End: ${end} / ${moment(end, 'DD/MM/YYYY')} \n\nResultado: ${moment(record.data_da_assinatura).isBetween(moment(start), moment(end), 'day', '[]')}`)
+            return moment(record.data_da_assinatura).isBetween(moment(start, 'DD/MM/YYYY'), moment(end, 'DD/MM/YYYY'), 'day', '[]');
+        },
         sorter: (a, b) => moment(a.data_da_assinatura).unix() - moment(b.data_da_assinatura).unix(),
-        render: (date: string) => moment(date).format('YYYY-MM-DD'),
+        render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Data da Publicação',
         dataIndex: 'data_da_publicacao',
         key: 'data_da_publicacao',
+        filterDropdown: DateFilterDropdown,
+        onFilter: (value, record: AditivoDataType) => {
+            const [start, end] = (value as String).split(',');
+            console.log(`Moment: (${moment(record.data_da_publicacao)}) \n\n - Value: ${value} \n - Start: ${start} / ${moment(start, 'DD/MM/YYYY')} \n - End: ${end} / ${moment(end, 'DD/MM/YYYY')} \n\nResultado: ${moment(record.data_da_assinatura).isBetween(moment(start), moment(end), 'day', '[]')}`)
+            return moment(record.data_da_assinatura).isBetween(moment(start, 'DD/MM/YYYY'), moment(end, 'DD/MM/YYYY'), 'day', '[]');
+        },
         sorter: (a,b) => moment(a.data_da_publicacao).unix() - moment(b.data_da_publicacao).unix(),
-        render: (date: string) => moment(date).format('YYYY-MM-DD'),
+        render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Início da Vigência',
         dataIndex: 'inicio_da_vigencia',
         key: 'inicio_da_vigencia',
+        filterDropdown: DateFilterDropdown,
+        onFilter: (value, record: AditivoDataType) => {
+            const [start, end] = (value as String).split(',');
+            console.log(`Moment: (${moment(record.inicio_da_vigencia)}) \n\n - Value: ${value} \n - Start: ${start} / ${moment(start, 'DD/MM/YYYY')} \n - End: ${end} / ${moment(end, 'DD/MM/YYYY')} \n\nResultado: ${moment(record.data_da_assinatura).isBetween(moment(start), moment(end), 'day', '[]')}`)
+            return moment(record.data_da_assinatura).isBetween(moment(start, 'DD/MM/YYYY'), moment(end, 'DD/MM/YYYY'), 'day', '[]');
+        },
         sorter: (a,b) => moment(a.inicio_da_vigencia).unix() - moment(b.inicio_da_vigencia).unix(),
-        render: (date: string) => moment(date).format('YYYY-MM-DD'),
+        render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Fim da Vigência',
         dataIndex: 'fim_da_vigencia',
         key: 'fim_da_vigencia',
+        filterDropdown: DateFilterDropdown,
+        onFilter: (value, record: AditivoDataType) => {
+            const [start, end] = (value as String).split(',');
+            console.log(`Moment: (${moment(record.fim_da_vigencia)}) \n\n - Value: ${value} \n - Start: ${start} / ${moment(start, 'DD/MM/YYYY')} \n - End: ${end} / ${moment(end, 'DD/MM/YYYY')} \n\nResultado: ${moment(record.data_da_assinatura).isBetween(moment(start), moment(end), 'day', '[]')}`)
+            return moment(record.data_da_assinatura).isBetween(moment(start, 'DD/MM/YYYY'), moment(end, 'DD/MM/YYYY'), 'day', '[]');
+        },
         sorter: (a,b) => moment(a.fim_da_vigencia).unix() - moment(b.fim_da_vigencia).unix(),
-        render: (date: string) => moment(date).format('YYYY-MM-DD'),
+        render: (date: string) => moment(date).format('DD/MM/YYYY'),
     },
     {
         title: 'Fiscal',
         dataIndex: 'fiscal',
         key: 'fiscal',
-        filterDropdown: ({setSelectedKeys, selectedKeys, confirm}) => {
-            return (
-                <>
-                    <Input
-                        autoFocus
-                        placeholder="Digite sua busca aqui"
-                        value={selectedKeys[0]}
-                        onChange={(e) => {
-                            setSelectedKeys(e.target.value?[e.target.value]:[])
-                            if (e.target.value.length >= 1)
-                                confirm({closeDropdown: false});
-                        }}
-                        onPressEnter={() => {
-                            confirm()
-                        }}
-                        onBlur={() => {
-                            confirm()
-                        }}
-                        style={{ marginInline: 4, marginBlockStart: 4, width: 200 }}></Input>
-                    <Button
-                        onClick={() => {
-                            confirm();
-                        }}
-                        type="primary"
-                        icon={<SearchOutlined />}
-                        style={{ margin: 4, width: 120}}>
-                            Pesquisar
-                    </Button>
-                </>
-            )
-        },
+        filterDropdown: TextFilterDropdown,
         filterIcon: () => <SearchOutlined />,
         onFilter: (value, record) => removeAcento(record.fiscal).toLowerCase().includes(removeAcento(String(value)).toLowerCase())
     },
@@ -112,37 +108,7 @@ const columns: ColumnsType<AditivoDataType> = [
         title: 'Gestor',
         dataIndex: 'gestor',
         key: 'gestor',
-        filterDropdown: ({setSelectedKeys, selectedKeys, confirm}) => {
-            return (
-                <>
-                    <Input
-                        autoFocus
-                        placeholder="Digite sua busca aqui"
-                        value={selectedKeys[0]}
-                        onChange={(e) => {
-                            setSelectedKeys(e.target.value?[e.target.value]:[])
-                            if (e.target.value.length >= 1)
-                                confirm({closeDropdown: false});
-                        }}
-                        onPressEnter={() => {
-                            confirm()
-                        }}
-                        onBlur={() => {
-                            confirm()
-                        }}
-                        style={{ marginInline: 4, marginBlockStart: 4, width: 200 }}></Input>
-                    <Button
-                        onClick={() => {
-                            confirm();
-                        }}
-                        type="primary"
-                        icon={<SearchOutlined />}
-                        style={{ margin: 4, width: 120}}>
-                            Pesquisar
-                    </Button>
-                </>
-            )
-        },
+        filterDropdown: TextFilterDropdown,
         filterIcon: () => <SearchOutlined />,
         onFilter: (value, record) => removeAcento(record.gestor).toLowerCase().includes(removeAcento(String(value)).toLowerCase())
     },

@@ -129,7 +129,6 @@ function OurTable() {
                 dataSource={data()}
                 size='middle'
                 scroll={{ x: 1800, }}
-                rowKey="id"
             />
         </>
     )
