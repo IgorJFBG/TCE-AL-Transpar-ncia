@@ -1,5 +1,5 @@
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, } from '@ant-design/icons';
+import { SearchOutlined, FilterFilled} from '@ant-design/icons';
 import { removeAcento } from "./defaults";
 import moment from 'moment';
 import type { DataType, AditivoDataType } from "./defaults";
@@ -198,4 +198,9 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-export { data, columns };
+function resetIcon(){
+    for (let i = 6; i <= 9; i++)
+        columns[i].filterIcon = (<FilterFilled />)
+}
+
+export { data, columns, resetIcon };

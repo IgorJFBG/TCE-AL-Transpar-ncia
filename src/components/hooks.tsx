@@ -4,6 +4,8 @@ import { SearchOutlined, } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs'; // importe o dayjs
 import 'dayjs/locale/pt-br'; // importe o idioma desejado
 
+import { resetIcon } from './tableColumns';
+
 const DateFilterDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
   const [startValue, setStartValue] = useState<Dayjs | null>(null);
   const [endValue, setEndValue] = useState<Dayjs | null>(null);
@@ -11,19 +13,19 @@ const DateFilterDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilte
   const handleStartChange = (value: Dayjs | null, dateString: string) => {
     setStartValue(value ? dayjs(dateString, 'DD/MM/YYYY') : null);
   };
+
   const handleEndChange = (value: Dayjs | null, dateString: string) => {
     setEndValue(value ? dayjs(dateString, 'DD/MM/YYYY') : null);
   };
+
   const handleSearch = () => {
-    if (startValue && endValue){
-      setSelectedKeys([`${startValue?.format('DD/MM/YYYY')},${endValue?.format('DD/MM/YYYY')}`]);
-      confirm();
-    }
+    setSelectedKeys([`${startValue ? startValue.format('DD/MM/YYYY') : '01/01/1900'},${endValue ? endValue.format('DD/MM/YYYY') : '31/12/2099'}`]);
+    confirm();
   };
+
   const handleReset = () => {
     setStartValue(null);
     setEndValue(null);
-    clearFilters();
   };
 
   return (
@@ -32,7 +34,7 @@ const DateFilterDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilte
         format={'DD/MM/YYYY'}
         placeholder="Data inicial"
         onChange={(value, dateString) => handleStartChange(value, dateString)}
-        value={startValue ? startValue : undefined} // Atribua "undefined" em vez de "null"
+        value = {startValue ? startValue : undefined} // Atribua "undefined" em vez de "null"
         style={{ marginRight: 8 }}
       />
       <DatePicker

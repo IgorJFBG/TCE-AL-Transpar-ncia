@@ -175,7 +175,7 @@ function More(props: {
                     style={{ paddingBlockStart: 8 }}
                     size="small"
                     pagination={{ pageSize: 50}}
-                    scroll={{ y: 300, x: 1300 }}
+                    scroll={{ y: 400, x: 1500 }}
                     />
             </Modal>
         </>

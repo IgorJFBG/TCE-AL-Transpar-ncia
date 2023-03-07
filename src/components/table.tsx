@@ -124,12 +124,14 @@ function OurTable() {
                     Objeto Web (json)
                 </Button>
             </div>
-            <Table
-                columns={columns}
-                dataSource={data()}
-                size='middle'
-                scroll={{ x: 1800, }}
-            />
+            <div>
+                <Table
+                    columns={columns}
+                    dataSource={data()}
+                    size='middle'
+                    scroll={{ x: 1800, }}
+                />
+            </div>
         </>
     )
 };
