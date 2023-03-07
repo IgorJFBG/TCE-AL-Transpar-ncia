@@ -30,18 +30,18 @@ const DateFilterDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilte
 
   return (
     <div style={{ padding: 8 }}>
-      <DatePicker
+      <DatePicker // Início do período de busca
         format={'DD/MM/YYYY'}
         placeholder="Data inicial"
         onChange={(value, dateString) => handleStartChange(value, dateString)}
-        value = {startValue ? startValue : undefined} // Atribua "undefined" em vez de "null"
+        value = {startValue ? startValue : undefined}
         style={{ marginRight: 8 }}
       />
-      <DatePicker
+      <DatePicker // Fim do período de busca
         format={'DD/MM/YYYY'}
         placeholder="Data final"
         onChange={(value, dateString) => handleEndChange(value, dateString)}
-        value={endValue ? endValue : undefined} // Atribua "undefined" em vez de "null"
+        value={endValue ? endValue : undefined}
         style={{ marginRight: 8 }}
       />
       <Button type="primary" onClick={handleSearch} style={{ marginRight: 8 }}>
